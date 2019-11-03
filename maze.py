@@ -49,9 +49,16 @@ def createMaze(matrix, size):
 
 	t.speed(0)
 
+	# center this bad boy on the screen
+	x = t.pos()[0] - (len(matrix) * size / 2)
+	y = t.pos()[1] + (len(matrix) * size / 2)
+
 	# use this for later
-	startingPos = t.pos()
-	startingIndex = []
+	startingPos = (x,y)
+	t.penup()
+	t.setpos(startingPos)
+	t.pendown()
+	startingIndex = [x,y]
 
 	# traverse cells, right to left, top to bottom
 	for i in matrix:
@@ -174,7 +181,7 @@ def main():
 
 	size = 20
 
-	matrix = getMazeFile('maze1.txt')
+	matrix = getMazeFile('hardmaze.txt')
 
 	y = len(matrix)
 	x = len(matrix[0])
