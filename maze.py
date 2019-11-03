@@ -2,6 +2,7 @@ import turtle as t
 import time
 import numpy as np
 
+
 def getMazeFile(filename):
 	with open(filename) as f:
 		matrix = [l.split() for l in f]
@@ -23,6 +24,7 @@ def drawCell(t, size, char):
 	t.begin_fill()
 
 	# need to optimize drawing maze
+	'''
 	t.forward(size)
 	t.setheading(90)
 	t.forward(size)
@@ -31,6 +33,10 @@ def drawCell(t, size, char):
 	t.setheading(270)
 	t.forward(size)
 	t.setheading(0)
+	'''
+	for i in range(4):
+		t.forward(size)
+		t.right(90)
 
 	# set parameters back just incase
 	t.end_fill()
