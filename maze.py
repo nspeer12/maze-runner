@@ -1,7 +1,7 @@
 import turtle as t
 import time
 import numpy as np
-
+import sys
 
 def getMazeFile(filename):
 	with open(filename) as f:
@@ -34,6 +34,7 @@ def drawCell(t, size, char):
 	t.forward(size)
 	t.setheading(0)
 	'''
+
 	for i in range(4):
 		t.forward(size)
 		t.right(90)
@@ -47,13 +48,17 @@ def createMaze(matrix, size):
 	# this function draws out a the maze
 	# and returns turtle at starting position
 
+	# create turtle object
 	t.speed(0)
+
+	# hide turtle while making maze
+	t.hideturtle()
 
 	# center this bad boy on the screen
 	x = t.pos()[0] - (len(matrix) * size / 2)
 	y = t.pos()[1] + (len(matrix) * size / 2)
 
-	# use this for later
+	# put the turtle at the top left position
 	startingPos = (x,y)
 	t.penup()
 	t.setpos(startingPos)
@@ -64,7 +69,6 @@ def createMaze(matrix, size):
 	for i in matrix:
 		# track starting position of each row
 		pos = t.position()
-
 		# traverse each cell in row
 		for x in range(0, len(i)):
 			if i[x] == '@':
@@ -83,12 +87,15 @@ def createMaze(matrix, size):
 	t.penup()
 	t.setpos(startingPos)
 
-	# go to center of the circle
+	# go to center of the cell
 	t.right(90)
 	midDist = size/2
 	t.forward(midDist)
 	t.left(90)
 	t.forward(midDist)
+
+	# restore visibility to turtle
+	t.showturtle()
 
 	return t, startingIndex
 
@@ -177,22 +184,37 @@ def star(t, size):
 	t.penup()
 	return
 
-def main():
+def main(*argv):
 
-	size = 20
+	# pass the matrix file through the command line
+	# default to a basic maze if no argument was passed
+	if sys.argv[1] != None:
+		matrix = getMazeFile(sys.argv[1])
+	else:
+		print('No maze file specified. Defaulting to maze0')
+		matrix = getMazeFile('maze0.txt')
 
-	matrix = getMazeFile('hardmaze.txt')
+	# get size from the second command line argument
+	# default to size 15
+	if sys.argv[2] != None:
+		size = int(sys.argv[2])
+	else:
+		print('no size specified. Defaulting to 15px')
+		size = 15
 
+	# get matrix size based on the the lengths of the matrix
+		# note: this is not gauranteed to work on matricies of variable lengths
 	y = len(matrix)
 	x = len(matrix[0])
 
+	# use a numpy array to keep track of visited cells
 	visited = np.zeros((y,x))
 
-	print(visited)
-
-
+	# call maze function to get maze and the index of the starting position
 	t, startingIndex = createMaze(matrix, size)
-	t.speed(6)
+
+	t.speed(0)
+	input('press Enter key to start maze')
 	print(backtrack(t, matrix, startingIndex, size, visited))
 
 	time.sleep(5)

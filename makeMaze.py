@@ -1,7 +1,6 @@
 import tkinter as tk
 import turtle
 import time
-import threading
 
 def drawCell(t, size, n, char):
 		if (char == '#'):
