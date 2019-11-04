@@ -44,3 +44,13 @@ def drawRow(t, arr, size):
 				break
 
 		t.end_fill()
+
+
+def main():
+	matrix = makeMatrix(100, 100)
+	print(matrix)
+	drawMaze(10, matrix)
+
+
+if __name__ == '__main__':
+	main()
