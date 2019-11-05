@@ -184,6 +184,58 @@ def star(t, size):
 	t.penup()
 	return
 
+def getStartingIndex(matrix):
+	x = 0
+	y = 0
+
+	for arr in matrix:
+		for i in arr:
+			if i == '@':
+				break
+			else:
+				y += 1
+			x += 1
+
+	return [y,x]
+
+
+def backtrack_no_display(matrix, index, visited):
+	# let's implement this recursively
+	i = index[0]
+	x = index[1]
+
+	# base case
+	if matrix[i][x] == 'e':
+		return True, [i,x]
+
+	print("i: ", i,  "\tx: ", x)
+	visited[i][x] = 1
+
+	if valid_move(i - 1, x, matrix, visited) == True:
+		print('right')
+
+		if backtrack_no_display(matrix, [i - 1, x], size, visited):
+			return True
+
+	if valid_move(i + 1, x, matrix, visited) == True:
+		print('down')
+		if backtrack_no_display(matrix, [i + 1, x], size, visited):
+			return True
+
+	if valid_move(i, x - 1, matrix, visited) == True:
+		print('left')
+		if backtrack_no_display(matrix, [i, x - 1], size, visited):
+			return True
+
+
+	if valid_move(i, x + 1, matrix, visited) == True:
+		print('up')
+		if backtrack_no_display(matrix, [i, x + 1], size, visited):
+			return True
+
+	return False
+
+
 def main(*argv):
 
 	# pass the matrix file through the command line

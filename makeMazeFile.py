@@ -32,6 +32,19 @@ def makeMatrix(x, y):
 
 	return matrix
 
+def writeMatrixToFile(matrix, filename):
+	# write maze to file
+	file = open(filename, 'w')
+	for arr in matrix:
+		for j in range(len(arr)):
+			file.write(arr[j])
+			# add a space except for at the end
+			if (j != len(matrix) - 1):
+				file.write(' ')
+		file.write('\n')
+
+	print(filename, ' has been created')
+
 
 def makeMazeFile(filename, x, y):
 	matrix = []
@@ -47,10 +60,10 @@ def makeMazeFile(filename, x, y):
 				subMatrix.append('#')
 			else:
 				rand = random()
-				if hasEntrance == False and rand > 0.9:
+				if hasEntrance == False and rand > 0.95:
 					subMatrix.append('@')
 					hasEntrance = True
-				elif hasExit == False and rand < 0.1:
+				elif hasExit == False and rand < 0.05 and rand > 0.0:
 					subMatrix.append('e')
 					hasExit = True
 				elif rand < 0.3:
