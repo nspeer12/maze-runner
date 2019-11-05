@@ -1,7 +1,7 @@
 import turtle as t
 import time
 from makeMazeFile import makeMatrix
-
+from maze import *
 def drawMaze(size, matrix):
 	t.speed(0)
 	t.hideturtle()
@@ -46,10 +46,70 @@ def drawRow(t, arr, size):
 		t.end_fill()
 
 
+
+def fastMazeDrawing(t, matrix, size):
+	# faster maze drawing
+
+	# some housekeeping
+	t.speed(0)
+	t.penup()
+	t.shape('square')
+
+	# manual size declaration for now
+	t.shapesize(0.5)
+
+	# center this bad boy on the screen
+
+	x = t.pos()[0] - (len(matrix) * size / 2)
+	y = t.pos()[1] + (len(matrix[0]) * size / 2)
+
+	# put the turtle at the top left position
+	startingPos = [x,y]
+	t.setpos(startingPos)
+
+	for arr in matrix:
+		# keep track of starting position
+		curPos = t.pos()
+
+		for i in range (0, len(arr)):
+
+			if (arr[i] == '#'):
+				t.stamp()
+
+			elif (arr[i] == '@'):
+				t.fillcolor('green')
+				t.stamp()
+				t.fillcolor('black')
+
+			elif (arr[i] == 'e'):
+				t.fillcolor('gold')
+				t.stamp()
+				t.fillcolor('black')
+
+			t.forward(size)
+			t.penup()
+
+		# move a row down
+		t.setpos(curPos[0], curPos[1] - size)
+
+
+	# return to starting position
+	return startingPos
+
 def main():
-	matrix = makeMatrix(100, 100)
+	t.speed(0)
+	matrix = makeMatrix(20, 20)
+
+	homePos = fastMazeDrawing(t.clone(), matrix, 10)
+	t.setpos(homePos[0], homePos[1])
+	t.showturtle()
+	t.pendown()
+	t.forward(100)
+
 	print(matrix)
-	drawMaze(10, matrix)
+	visited = np.zeros((len(matrix), len(matrix[0])))
+	backtrack(t, matrix, homePos, 5, visited)
+	time.sleep(5)
 
 
 if __name__ == '__main__':
