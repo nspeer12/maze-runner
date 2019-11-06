@@ -125,7 +125,7 @@ def backtrack(t, matrix, index, size, visited):
 
 	if valid_move(i + 1, x, matrix, visited) == True:
 		print('moving down')
-		t.settiltangle(90)
+		t.settiltangle(270)
 		t.goto(curpos[0], curpos[1] - size)
 		t.dot()
 		if backtrack(t, matrix, [i + 1, x], size, visited):
@@ -270,7 +270,3 @@ def main(*argv):
 	print(backtrack(t, matrix, startingIndex, size, visited))
 
 	time.sleep(5)
-
-
-if __name__ == '__main__':
-	main()
