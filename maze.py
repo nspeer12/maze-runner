@@ -23,18 +23,6 @@ def drawCell(t, size, char):
 
 	t.begin_fill()
 
-	# need to optimize drawing maze
-	'''
-	t.forward(size)
-	t.setheading(90)
-	t.forward(size)
-	t.setheading(180)
-	t.forward(size)
-	t.setheading(270)
-	t.forward(size)
-	t.setheading(0)
-	'''
-
 	for i in range(4):
 		t.forward(size)
 		t.right(90)
@@ -236,19 +224,20 @@ def backtrack_no_display(matrix, index, visited):
 	return False
 
 
-def main(*argv):
+def main():
 
 	# pass the matrix file through the command line
 	# default to a basic maze if no argument was passed
-	if sys.argv[1] != None:
-		matrix = getMazeFile(sys.argv[1])
+	if len(sys.argv) > 1:
+		matrix = getMazeFile('mazes/' + sys.argv[1])
 	else:
 		print('No maze file specified. Defaulting to maze0')
-		matrix = getMazeFile('maze0.txt')
+		print('Proper Syntax: python maze.py <maze-file> <size in px>')
+		matrix = getMazeFile('mazes/maze0.txt')
 
 	# get size from the second command line argument
 	# default to size 15
-	if sys.argv[2] != None:
+	if len(sys.argv) > 2:
 		size = int(sys.argv[2])
 	else:
 		print('no size specified. Defaulting to 15px')
@@ -270,3 +259,6 @@ def main(*argv):
 	print(backtrack(t, matrix, startingIndex, size, visited))
 
 	time.sleep(5)
+
+if __name__=='__main__':
+	main()
