@@ -3,6 +3,9 @@ import time
 import numpy as np
 import sys
 
+screen = t.Screen()
+screen.tracer(0)
+
 def getMazeFile(filename):
 	with open(filename) as f:
 		matrix = [l.split() for l in f]
@@ -84,7 +87,7 @@ def createMaze(matrix, size):
 
 	# restore visibility to turtle
 	t.showturtle()
-
+	screen.update()
 	return t, startingIndex
 
 def backtrack(t, matrix, index, size, visited):
@@ -137,6 +140,8 @@ def backtrack(t, matrix, index, size, visited):
 			return True
 
 	t.setpos(curpos)
+	screen.update()
+
 	return False
 
 
@@ -253,6 +258,9 @@ def main():
 
 	# call maze function to get maze and the index of the starting position
 	t, startingIndex = createMaze(matrix, size)
+	
+	# restore screen animation
+	screen.tracer(1,10)
 
 	t.speed(0)
 	input('press Enter key to start maze')
